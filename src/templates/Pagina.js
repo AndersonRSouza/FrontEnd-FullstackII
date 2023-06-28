@@ -2,6 +2,7 @@ import Cabecalho from "./Cabecalho";
 import Menu from "./Menu";
 import Rodape from "./Rodape";
 
+
 export default function Pagina(props){
     return(
         <div className="">

@@ -27,6 +27,7 @@ import TelaDeCadastroFornecedor from "./TelasDeCadastro/TelaDeCadastroFornecedor
 // import TelaDeRelatorioFornecedor from "./relatorios/TelaDeRelatorioFornecedor";
 // import TelaDeCadastroCamareira from "./TelasDeCadastro/TelaDeCadastroCamareira";
 import TelaDeCadastroPedidoCompra from "./TelasDeCadastro/TelaDeCadastroPedidoCompras";
+import TelaDeCadastroProduto from "./TelasDeCadastro/TelaDeCadastroProdutos";
 // import TelaDeRelatorioPedidoCompra from "./relatorios/telaDeRelatorioPedidoCompra";
 // import BarraBusca from "./componentes/busca/BarraBusca";
 // import { useState } from "react";
@@ -48,6 +49,7 @@ function App() {
         <Routes>
           <Route path="/cadastroPedidoCompra" element={<TelaDeCadastroPedidoCompra/>}/>
           <Route path="/cadastroFornecedor" element={<TelaDeCadastroFornecedor/>}/>
+          <Route path="/cadastroProduto" element={<TelaDeCadastroProduto/>}/>
           {/* <Route path="/relatorioFornecedor" element={<TelaDeRelatorioFornecedor/>}/> */}
           {/* <Route path="/relatorioPedidoCompra" element={<TelaDeRelatorioPedidoCompra/>}/> */}
           {/* <Route path="/cadastroCamareira" element={<TelaDeCadastroCamareira/>}/> */}

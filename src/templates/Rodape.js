@@ -1,12 +1,21 @@
-import { Container } from "react-bootstrap";
+// import { Container } from "react-bootstrap";
 
 export default function Rodape(props) {
   return (
-    <Container
-      style={{ position: "absolute", bottom: "0" }}
-      className="bg-success text-light border d-flex justify-content-center align-content-center d-flex"
+    <div
+      style={{
+        position: "relative",
+        left: "0",
+        bottom: "0",
+        width: "100%",
+        backgroundColor: "#28a745",
+        color: "#fff",
+        textAlign: "center",
+        padding: "1px",
+      }}
     >
       <h5>{props.texto || "Sistema AEHI - Hotel Recanto Feliz"}</h5>
-    </Container>
+    </div>
   );
 }
+

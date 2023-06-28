@@ -16,6 +16,7 @@ export default function Menu(props) {
             <NavDropdown title="Cadastro" id="basic-nav-dropdown">
               <LinkContainer to="/cadastroFornecedor"><NavDropdown.Item>Fornecedores</NavDropdown.Item></LinkContainer>
               <LinkContainer to="/cadastroPedidoCompra"><NavDropdown.Item>Pedido de Compra</NavDropdown.Item></LinkContainer>
+              <LinkContainer to="/cadastroProduto"><NavDropdown.Item>Produtos</NavDropdown.Item></LinkContainer>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

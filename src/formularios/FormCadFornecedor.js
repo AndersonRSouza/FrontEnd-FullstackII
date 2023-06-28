@@ -12,7 +12,7 @@ import { IMaskInput } from "react-imask";
 // import { LinkContainer } from "react-router-bootstrap";
 
 export default function FormCadFornecedor(props) {
-  const [validado, setValidado] = useState(false);
+  const [formValidado, setFormValidado] = useState(false);
   // const [listaFornecedores, setListaFornecedores] = useState([]);
   // const [status, setStatus] = useState(STATUS.sucesso);
   // const [fornecedorSelecionado, setFornecedorSelecionado] = useState({});
@@ -98,14 +98,14 @@ export default function FormCadFornecedor(props) {
   const manipularSubmissao = (evento) => {
     const form = evento.currentTarget;
     if (form.checkValidity()) {
-      setValidado(false);
       gravarFornecedor();
     } else {
-      setValidado(true);
+      setFormValidado(true);
     }
     evento.preventDefault();
     evento.stopPropagation();
   };
+  
 
   return (
     <Container>
@@ -113,7 +113,7 @@ export default function FormCadFornecedor(props) {
         <h3>Cadastro de Fornecedor</h3>
       </Row>
       <Row className="mt-2 p-2 border border-success">
-        <Form noValidate validated={validado} onSubmit={manipularSubmissao}>
+        <Form noValidate validated={formValidado} onSubmit={manipularSubmissao}>
           <Row className="mb-1">
             <Form.Group as={Col} md="1">
               <Form.Label>Código</Form.Label>
@@ -241,6 +241,7 @@ export default function FormCadFornecedor(props) {
                 value={cadFornecedor.uf}
                 onChange={manipularMudanca}
               >
+                <option>Selecione o estado</option>
                 <option>AC</option>
                 <option>AL</option>
                 <option>AP</option>
@@ -291,20 +292,18 @@ export default function FormCadFornecedor(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="2">
-              <Form.Label>Pessoa</Form.Label>
-              {/* <Form.Control id="pessoa" name="pessoa" required type="text"/> */}
-              <Form.Select
+              <Form.Label>Física/Juridica</Form.Label>
+              <Form.Control
                 id="pessoa"
                 name="pessoa"
-                defaultValue=""
+                required
+                type="text"
+                placeholder="Física ou Jurídica"
                 value={cadFornecedor.pessoa}
                 onChange={manipularMudanca}
-              >
-                <option>Jurídica</option>
-                <option>Física</option>
-              </Form.Select>
+              />
               <Form.Control.Feedback type="invalid">
-                Por favor, informe a pessoa do fornecedor!
+              Por favor, informe se o fornecedor é pessoa física ou jurídica!
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="3">
