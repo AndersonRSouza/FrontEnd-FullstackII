@@ -35,10 +35,10 @@ export default function TabelaDePedidoCompra(props) {
               return (
                 <tr key={`${pedidoCompra.codPedido} `}>
                   <td>{pedidoCompra.codPedido}</td>
-                  <td>{pedidoCompra.codFornecedor}</td>
-                  <td>{pedidoCompra.razaoSocial}</td>
+                  <td>{pedidoCompra.fornecedor.codigo}</td>
+                  <td>{pedidoCompra.fornecedor.razaoSocial}</td>
                   <td>{pedidoCompra.dataCompra}</td>
-                  <td>{0}</td>
+                  <td>{pedidoCompra.total}</td>
                   <td>
                     <Button
                       className="btn btn-danger"

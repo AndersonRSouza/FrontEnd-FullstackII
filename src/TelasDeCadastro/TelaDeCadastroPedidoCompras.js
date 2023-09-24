@@ -11,7 +11,7 @@ import { Spinner } from "react-bootstrap";
 
 export default function TelaDeCadastroPedidoCompra(props) {
   console.log("teste tela 2x")
-  const localRecursos = "http://localhost:4000/pedidoproduto";
+  const localRecursos = "http://localhost:4000/pedidocompras";
   const [exibirTabela, setExibirTabela] = useState(true);
   const [listaPedidoCompras, setListaPedidoCompras] = useState([]);
   const [erro, setErro] = useState(null);
@@ -38,6 +38,25 @@ export default function TelaDeCadastroPedidoCompra(props) {
     setExibirTabela(!exibirTabela);
   }
   // const [status, setStatus] = useState(STATUS.ocioso);
+
+  function apagarPedidoCompra(pedidoCompra) {
+
+    fetch("http://localhost:4000/pedidocompras", {
+      method: "DELETE",
+      headers: { "content-Type": "application/json" },
+      body: JSON.stringify({
+        codPedido: pedidoCompra.codPedido
+      }),
+    }).then(
+      (dados) => {   
+        console.log("dados", dados)      
+        buscarPedidoCompras();
+      },
+      (error) => {
+       
+      }
+    );
+  }
 
   function buscarPedidoCompras() {
     console.log("buscar")
@@ -93,7 +112,7 @@ export default function TelaDeCadastroPedidoCompra(props) {
           <TabelaDePedidoCompra
             dados={listaPedidoCompras}
             chamarTelaCadastro={alternarTelas}
-            // excluirPedidoCompra={apagarPedidoCompra}
+            excluirPedidoCompra={apagarPedidoCompra}
           />
         </Pagina>
       );

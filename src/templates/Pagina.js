@@ -1,6 +1,6 @@
 import Cabecalho from "./Cabecalho";
 import Menu from "./Menu";
-import Rodape from "./Rodape";
+// import Rodape from "./Rodape";
 
 
 export default function Pagina(props){
@@ -12,9 +12,9 @@ export default function Pagina(props){
             <div>
                 {props.children}
             </div>
-            <div>
+            {/* <div>
                 <Rodape texto="Sistema AEHI - Hotel Recanto Feliz &copy; 2022"/>  
-            </div>
+            </div> */}
         </div>
         
     )

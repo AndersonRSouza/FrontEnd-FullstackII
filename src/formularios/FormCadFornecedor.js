@@ -16,32 +16,34 @@ export default function FormCadFornecedor(props) {
   // const [listaFornecedores, setListaFornecedores] = useState([]);
   // const [status, setStatus] = useState(STATUS.sucesso);
   // const [fornecedorSelecionado, setFornecedorSelecionado] = useState({});
-  const [cadFornecedor, setCadFornecedor] = useState({
-    codigo: 0,
-    razaoSocial: "",
-    nomeFantasia: "",
-    endereco: "",
-    numero: "",
-    complemento: "",
-    bairro: "",
-    cidade: "",
-    uf: "",
-    cep: "",
-    pessoa: "",
-    cnpj: "",
-    estadual: "",
-    municipal: "",
-    email: "",
-    celular: "",
-    telefone: "",
-    contato: "",
-    // codPedido: 0,
-    // produto: "",
-    // quantidade: 0,
-    // dataCompra: "",
-  });
+  const [cadFornecedor, setCadFornecedor] = useState(props.fornecedor);
+  // const [cadFornecedor, setCadFornecedor] = useState({
+  //   codigo: 0,
+  //   razaoSocial: "",
+  //   nomeFantasia: "",
+  //   endereco: "",
+  //   numero: "",
+  //   complemento: "",
+  //   bairro: "",
+  //   cidade: "",
+  //   uf: "",
+  //   cep: "",
+  //   pessoa: "",
+  //   cnpj: "",
+  //   estadual: "",
+  //   municipal: "",
+  //   email: "",
+  //   celular: "",
+  //   telefone: "",
+  //   contato: "",
+  //   // codPedido: 0,
+  //   // produto: "",
+  //   // quantidade: 0,
+  //   // dataCompra: "",
+  // });
 
   function gravarFornecedor() {
+    if(!props.modoEdicao){
     fetch("http://localhost:4000/fornecedor", {
       method: "POST",
       headers: { "content-Type": "application/json" },
@@ -84,6 +86,16 @@ export default function FormCadFornecedor(props) {
         alert("Não foi possivel registrar o fornecedor: " + erro.message);
       });
   }
+  else{
+    fetch("http://localhost:4000/fornecedor", {
+      method: "PUT",
+      headers: { "content-Type": "application/json" },
+      body: JSON.stringify(cadFornecedor),
+    }).then((resposta) =>{
+      alert("Atualizado com sucesso!")
+    });
+  }
+}
 
   function manipularMudanca(e) {
     const alvo = e.target.name;
@@ -433,9 +445,7 @@ export default function FormCadFornecedor(props) {
           <Button
             className="btn btn-warning border border-warning text-white"
             type="button"
-            onClick={() => {
-              props.onTabela(true);
-            }}
+            onClick={props.chamarTabelaFornecedores}
           >
             Voltar
           </Button>
