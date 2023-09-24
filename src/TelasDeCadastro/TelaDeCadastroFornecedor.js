@@ -91,7 +91,7 @@ export default function TelaDeCadastroFornecedor(props) {
           })
             .then((resposta) => {
               if (resposta.ok) {
-                console.log("Fornecedor excluído com sucesso");
+                alert("Fornecedor excluído com sucesso");
                 buscarFornecedores();
               } else {
                 console.error("Erro ao excluir fornecedor");

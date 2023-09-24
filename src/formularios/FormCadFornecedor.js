@@ -81,6 +81,7 @@ export default function FormCadFornecedor(props) {
           setCadFornecedor({ ...cadFornecedor, codigo: dados.codigo });
         }
         alert(dados.mensagem);
+        window.location.reload();
       })
       .catch((erro) => {
         alert("Não foi possivel registrar o fornecedor: " + erro.message);
@@ -93,6 +94,7 @@ export default function FormCadFornecedor(props) {
       body: JSON.stringify(cadFornecedor),
     }).then((resposta) =>{
       alert("Atualizado com sucesso!")
+      window.location.reload();
     });
   }
 }
