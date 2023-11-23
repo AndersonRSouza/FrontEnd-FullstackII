@@ -1,60 +1,46 @@
-// import FormCadPedidoCompras from './formularios/FormCadPedidoCompras';
-// import './App.js';
-// import FormCadFornecedor from './formularios/FormCadFornecedor';
-// import { Container } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container } from 'react-bootstrap';
+import TelaMenu from './TelasDeCadastro/TelaMenu';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import TelaDeCadastroFornecedor from './admin/telasDeCadastro/TelaDeCadastroFornecedor';
+import TelaDeCadastroHospede from './atendimento/telasDeCadastro/TelaDeCadastroHospede';
+import TelaDeCadastroAcomodacao from './atendimento/telasDeCadastro/TelaDeCadastroAcomodacao';
+import TelaDeCadastroPedidoCompra from './admin/telasDeCadastro/TelaDeCadastroPedidoCompras';
+import TelaDeCadastroProduto from './admin/telasDeCadastro/TelaDeCadastroProdutos';
+import TelaDeCadastroServico from './atendimento/telasDeCadastro/TelaDeCadastroServico';
+import AuthComponent from './componentes/auth/AuthComponent';
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <Container>
-//         <FormCadFornecedor/>
-//       </Container>
-//       <Container>
-//         <FormCadPedidoCompras/>
-//       </Container>
-//     </div>
-    
-//   );
-// }
-// export default App;
-import { Container } from "react-bootstrap";
-import TelaMenu from "./TelasDeCadastro/TelaMenu";
-// import Tela404 from "./TelasDeCadastro/Tela404";
-// import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { BrowserRouter,Route, Routes } from "react-router-dom";
-import TelaDeCadastroFornecedor from "./TelasDeCadastro/TelaDeCadastroFornecedor";
-// import TelaDeRelatorioFornecedor from "./relatorios/TelaDeRelatorioFornecedor";
-// import TelaDeCadastroCamareira from "./TelasDeCadastro/TelaDeCadastroCamareira";
-import TelaDeCadastroPedidoCompra from "./TelasDeCadastro/TelaDeCadastroPedidoCompras";
-import TelaDeCadastroProduto from "./TelasDeCadastro/TelaDeCadastroProdutos";
-// import TelaDeRelatorioPedidoCompra from "./relatorios/telaDeRelatorioPedidoCompra";
-// import BarraBusca from "./componentes/busca/BarraBusca";
-// import { useState } from "react";
-
-// const listaFornecedores = [
-//   {
-//     cnpj:"11.111.111/0001-11",
-//     razaoSocial:"DELL"
-//   },
-//   {
-//     cnpj:"22.222.222/0002-22",
-//     razaoSocial:"Knup"
-//   }
-// ]
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   return (
     <Container>
       <BrowserRouter>
         <Routes>
-          <Route path="/cadastroPedidoCompra" element={<TelaDeCadastroPedidoCompra/>}/>
-          <Route path="/cadastroFornecedor" element={<TelaDeCadastroFornecedor/>}/>
-          <Route path="/cadastroProduto" element={<TelaDeCadastroProduto/>}/>
-          {/* <Route path="/relatorioFornecedor" element={<TelaDeRelatorioFornecedor/>}/> */}
-          {/* <Route path="/relatorioPedidoCompra" element={<TelaDeRelatorioPedidoCompra/>}/> */}
-          {/* <Route path="/cadastroCamareira" element={<TelaDeCadastroCamareira/>}/> */}
-          <Route path="/" element={<TelaMenu/>}/>
-          {/* <Route path="*" element={<Tela404/>}/> */}
+          {/* Rota para o componente de autenticação */}
+          <Route
+            path="/auth/*"
+            element={<AuthComponent isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
+          />
+
+          {/* Rotas protegidas */}
+          {isAuthenticated ? (
+            <>
+              <Route path="/cadastroPedidoCompra" element={<TelaDeCadastroPedidoCompra />} />
+              <Route path="/cadastroHospede" element={<TelaDeCadastroHospede />} />
+              <Route path="/cadastroAcomodacao" element={<TelaDeCadastroAcomodacao />} />
+              <Route path="/cadastroFornecedor" element={<TelaDeCadastroFornecedor />} />
+              <Route path="/cadastroProduto" element={<TelaDeCadastroProduto />} />
+              <Route path="/cadastroServico" element={<TelaDeCadastroServico />} />
+              <Route path="/" element={<TelaMenu />} />
+            </>
+          ) : (
+            // Redirecionar para a página de autenticação se não estiver autenticado
+            <Route
+              path="/*"
+              element={<Navigate to="/" />}
+            />
+          )}
         </Routes>
       </BrowserRouter>
     </Container>

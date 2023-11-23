@@ -4,8 +4,8 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import BarraBusca from "../componentes/busca/BarraBusca";
-import CaixaSelecao from "../componentes/busca/CaixaSelecao";
+import BarraBusca from "../../componentes/busca/BarraBusca"
+import CaixaSelecao from "../../componentes/busca/CaixaSelecao"
 import TabelaItensPedido from "../tabelas/TabelaItensPedido";
 
 export default function FormCadPedidoCompras(props) {

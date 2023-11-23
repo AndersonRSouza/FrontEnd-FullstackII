@@ -1,5 +1,6 @@
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
-import { IconeEditar, IconeExcluir } from "../icones/icones";
+import { IconeEditar, IconeExcluir } from "../../icones/icones"
+
 
 export default function TabelaDeFornecedores(props) {
   console.log("props>>>", props.dados);

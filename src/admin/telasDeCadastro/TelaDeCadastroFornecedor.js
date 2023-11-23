@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import FormCadFornecedor from "../formularios/FormCadFornecedor";
 import TabelaDeFornecedores from "../tabelas/tabelaDeFornecedor";
-import Pagina from "../templates/Pagina";
+import Pagina from "../../templates/Pagina";
 import { Spinner } from "react-bootstrap";
 
 export default function TelaDeCadastroFornecedor(props) {
@@ -91,7 +91,7 @@ export default function TelaDeCadastroFornecedor(props) {
           })
             .then((resposta) => {
               if (resposta.ok) {
-                console.log("Fornecedor excluído com sucesso");
+                alert("Fornecedor excluído com sucesso");
                 buscarFornecedores();
               } else {
                 console.error("Erro ao excluir fornecedor");

@@ -1,5 +1,5 @@
 import { Container, Row, Col, Button, Table } from "react-bootstrap";
-import { IconeEditar, IconeExcluir } from "../icones/icones";
+import { IconeEditar, IconeExcluir } from "../../icones/icones"
 
 
 export default function TabelaDeProdutos(props) {

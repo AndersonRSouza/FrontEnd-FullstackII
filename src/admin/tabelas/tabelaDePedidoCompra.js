@@ -1,5 +1,6 @@
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
-import { IconeExcluir } from "../icones/icones";
+import { IconeExcluir } from "../../icones/icones"
+
 // import TelaDeCadastroPedidoCompra from "../TelasDeCadastro/TelaDeCadastroPedidoCompras";
 // import  from "../TelasDeCadastro/TelaDeCadastroPedidoCompras";
 

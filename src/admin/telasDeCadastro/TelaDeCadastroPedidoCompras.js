@@ -5,7 +5,7 @@ import TabelaDePedidoCompra from "../tabelas/tabelaDePedidoCompra";
 import { useState, useEffect } from "react";
 // import Pagina from "../templates/Pagina";
 // import Pagina from "../templates/Pagina";
-import Pagina from "../templates/Pagina";
+import Pagina from "../../templates/Pagina";
 import { Spinner } from "react-bootstrap";
 
 

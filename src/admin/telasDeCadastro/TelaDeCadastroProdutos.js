@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
-import Pagina from "../templates/Pagina";
+import Pagina from "../../templates/Pagina.js";
 import TabelaDeProdutos from "../tabelas/tabelaDeprodutos.js";
 import FormCadProduto from "../formularios/FormCadProdutos.js";
 
