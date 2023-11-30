@@ -4,7 +4,7 @@ import { IconeEditar, IconeExcluir } from "../../icones/icones"
 
 export default function TabelaDeServicos(props) {
     return (
-      <Container>
+      <Container Container style={{ maxHeight: '100vh', overflowY: 'auto' }}>
         <Row className="mb-3 border border-success d-flex text-center">
           <h3>Tabela de Servicos</h3>
         </Row>
@@ -13,7 +13,7 @@ export default function TabelaDeServicos(props) {
             <Button variant="success" onClick={props.chamarTelaCadastro}>Cadastrar Servico</Button>
           </Col>
         </Row>
-        <Row className="mt-2 p-2 border border-success">
+        <Row className="mt-2 p-2 border border-success" style={{ overflowX: 'auto' }}>
           <Table striped bordered hover variant="success">
             <thead>
               <tr>

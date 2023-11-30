@@ -4,63 +4,60 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import BarraBusca from "../../componentes/busca/BarraBusca"
-import CaixaSelecao from "../../componentes/busca/CaixaSelecao"
-import TabelaItensPedido from "../tabelas/TabelaItensPedido";
+import BarraBusca from "../../componentes/busca/BarraBusca";
+import CaixaSelecao from "../../componentes/busca/CaixaSelecao";
+import TabelaServicoHospede from "../tabelas/TabelaServicoHospede";
 
-export default function FormCadPedidoCompras(props) {
+export default function FormCadConsumoServicos(props) {
   // if (!props.)colocar validação do modo de edição para puxar os dados do formulário
   const [validado, setValidado] = useState(false);
-  // const [listaProdutos, setListaProdutos] = useState([]);
-  const [listaFornecedores, setListaFornecedores] = useState([]);
-  // const [status, setStatus] = useState(STATUS.sucesso);
-  const [produtoSelecionado, setProdutoSelecionado] = useState({});
+  const [listaHospedes, setListaHospedes] = useState([]);
+  const [servicoSelecionado, setServicoSelecionado] = useState({});
   const [qtdItem, setQtdItem] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
-  const [fornecedorSelecionado, setFornecedorSelecionado] = useState({});
-  const [cadPedido, setCadPedido] = useState({
-    codPedido: 0,
+  const [hospedeSelecionado, setHospedeSelecionado] = useState({});
+  const [cadConsumoServico, setCadConsumoServico] = useState({
+    codConsumoServico: 0,
     quantidade: 0,
-    dataCompra: "",
-    listaProdutos: [],
+    listaServicos: [],
   });
 
   // useEffect(() => {
-  //   fetch("http://localhost:4000/produto", { method: "GET" })
+  //   fetch("http://localhost:4000/servico", { method: "GET" })
   //     .then((resposta) => {
   //       return resposta.json();
   //     })
-  //     .then((listaProdutos) => {
-  //       setListaProdutos(listaProdutos);
+  //     .then((listaServicos) => {
+  //       setListaServicos(listaServicos);
   //     })
   //     .catch((erro) => {
   //       alert("Não foi possivel recuperar os fornecedores do backend.");
   //     });
   // });
   useEffect(() => {
-    fetch("http://localhost:4000/fornecedor", { method: "GET" })
+    fetch("http://localhost:4000/hospede", { method: "GET" })
       .then((resposta) => {
         return resposta.json();
       })
-      .then((listaFornecedores) => {
-        setListaFornecedores(listaFornecedores);
+      .then((listaHospedes) => {
+        setListaHospedes(listaHospedes);
       })
       .catch((erro) => {
         alert("Não foi possivel recuperar os fornecedores do backend.");
       });
   },[]);
-  function gravarPedidoCompras() {
+  function gravarConsumoServicos() {
     console.log("gravar teste")
-    fetch("http://localhost:4000/pedidocompras", {
+    fetch("http://localhost:4000/consumoservico", {
       method: "POST",
       headers: { "content-Type": "application/json" },
       body: JSON.stringify({
-        quantidade: cadPedido.quantidade,
-        dataCompra: cadPedido.dataCompra,
-        fornecedor: {
-          codigo: fornecedorSelecionado.codigo,
+        quantidade: cadConsumoServico.quantidade,
+        dataServico: cadConsumoServico.dataServico,
+        hospede: {
+          cod_hosp: hospedeSelecionado.cod_hosp,
         },
-        produtos: cadPedido.listaProdutos
+        servicos: cadConsumoServico.listaServicos
       }),
     })
       .then((resposta) => {
@@ -68,7 +65,7 @@ export default function FormCadPedidoCompras(props) {
       })
       .then((dados) => {
         if (dados.status) {
-          setCadPedido({ ...cadPedido, codPedido: dados.codPedido });
+          setCadConsumoServico({ ...cadConsumoServico, codConsumoServico: dados.codConsumoServico });
         }
         alert(dados.mensagem);
         window.location.reload();
@@ -81,9 +78,9 @@ export default function FormCadPedidoCompras(props) {
   function manipularMudanca(e) {
     const alvo = e.target.name;
     if (e.target.type === "checkbox") {
-      setCadPedido({ ...cadPedido, [alvo]: e.target.checked });
+      setCadConsumoServico({ ...cadConsumoServico, [alvo]: e.target.checked });
     } else {
-      setCadPedido({ ...cadPedido, [alvo]: e.target.value });
+      setCadConsumoServico({ ...cadConsumoServico, [alvo]: e.target.value });
       console.log("Digitou " + e.target.value);
     }
   }
@@ -92,7 +89,7 @@ export default function FormCadPedidoCompras(props) {
     const form = evento.currentTarget;
     if (form.checkValidity()) {
       setValidado(false);
-      gravarPedidoCompras();
+      gravarConsumoServicos();
     } else {
       setValidado(true);
     }
@@ -102,7 +99,7 @@ export default function FormCadPedidoCompras(props) {
   return (
     <Container>
       <Row className="mb-3 border border-success d-flex text-center">
-        <h3>Cadastro de Pedido Compras</h3>
+        <h3>Cadastro de Consumo de Servicos</h3>
       </Row>
       <Row className="mt-2 p-2 border border-success">
         <Form noValidate validated={validado} onSubmit={manipularSubmissao}>
@@ -110,27 +107,27 @@ export default function FormCadPedidoCompras(props) {
             <Form.Group as={Col} md="1">
               <Form.Label>Código</Form.Label>
               <Form.Control
-                id="codPedido"
-                name="codPedido"
+                id="codConsumoServico"
+                name="codConsumoServico"
                 required
                 type="int"
                 disabled
-                value={cadPedido.codPedido}
+                value={cadConsumoServico.codConsumoServico}
                 onChange={manipularMudanca}
               />
               <Form.Control.Feedback type="invalid">
-                Por favor, informe o código do pedido!
+                Por favor, informe o código do Consumo!
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="5">
-              <Form.Label>Data da Compra</Form.Label>
+              <Form.Label>Data do Servico</Form.Label>
               <Form.Control
-                id="dataCompra"
-                name="dataCompra"
+                id="dataServico"
+                name="dataServico"
                 required
                 type="date"
                 placeholder="00/00/0000"
-                value={cadPedido.dataCompra}
+                value={cadConsumoServico.dataServico}
                 onChange={manipularMudanca}
               />
               <Form.Control.Feedback type="invalid">
@@ -138,26 +135,26 @@ export default function FormCadPedidoCompras(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} md="6">
-              <Form.Label>Selecione um Fornecedor:</Form.Label>
+              <Form.Label>Selecione um Hospede:</Form.Label>
               <BarraBusca
-                id="codFornecedor"
-                name="codFornecedor"
-                placeHolder={"Informe o nome do Fornecedor"}
-                dados={listaFornecedores}
-                campoChave={"codigo"}
-                campoBusca={"razaoSocial"}
-                funcaoSelecao={setFornecedorSelecionado}
+                id="codHospedeConsumo"
+                name="codHospedeConsumo"
+                placeHolder={"Informe o nome do Hospede"}
+                dados={listaHospedes}
+                campoChave={"cod_hosp"}
+                campoBusca={"nome"}
+                funcaoSelecao={setHospedeSelecionado}
                 valor={""}
               />
             </Form.Group>
             <Container className="m-1 border">
               <Form.Group>
-                <Form.Label>Selecione um produto:</Form.Label>
+                <Form.Label>Selecione um servico:</Form.Label>
                 <CaixaSelecao
-                  enderecoFonteDados="http://localhost:4000/produto"
-                  campoChave={"codProduto"}
-                  campoExibicao={"nome"}
-                  funcaoSelecao={setProdutoSelecionado}
+                  enderecoFonteDados="http://localhost:4000/servico"
+                  campoChave={"codServico"}
+                  campoExibicao={"descricao"}
+                  funcaoSelecao={setServicoSelecionado}
                 />
               </Form.Group>
               <Row>
@@ -168,17 +165,17 @@ export default function FormCadPedidoCompras(props) {
                         <Form.Label>Codigo:</Form.Label>
                         <Form.Control
                           type="text"
-                          value={produtoSelecionado.codProduto}
+                          value={servicoSelecionado.codServico}
                           disabled
                         />
                       </Form.Group>
                     </Col>
                     <Col md={5}>
                       <Form.Group>
-                        <Form.Label>Descrição do produto:</Form.Label>
+                        <Form.Label>Descrição do servico:</Form.Label>
                         <Form.Control
                           type="text"
-                          value={produtoSelecionado.nome}
+                          value={servicoSelecionado.descricao}
                           disabled
                         />
                       </Form.Group>
@@ -188,7 +185,7 @@ export default function FormCadPedidoCompras(props) {
                         <Form.Label>Preço R$:</Form.Label>
                         <Form.Control
                           type="text"
-                          value={produtoSelecionado.preco}
+                          value={servicoSelecionado.valor}
                           disabled
                         />
                       </Form.Group>
@@ -204,7 +201,7 @@ export default function FormCadPedidoCompras(props) {
                             const qtd = e.currentTarget.value;
                             if (qtd > 0){
                               setQtdItem(qtd);
-                              setSubTotal(qtd * parseFloat(produtoSelecionado.preco));
+                              setSubTotal(qtd * parseFloat(servicoSelecionado.valor));
                             }
                           }}/>
                       </Form.Group>
@@ -219,15 +216,15 @@ export default function FormCadPedidoCompras(props) {
                       <Form.Group>
                         <Form.Label>Adicionar</Form.Label>
                         <Button onClick={()=>{
-                          let listaProdutoCompras = cadPedido.listaProdutos;
-                          listaProdutoCompras.push({
-                            codProduto:produtoSelecionado.codProduto,
-                            nome:produtoSelecionado.nome,
-                            preco:produtoSelecionado.preco,
+                          let listaServicoPrestados = cadConsumoServico.listaServicos;
+                          listaServicoPrestados.push({
+                            codServico:servicoSelecionado.codServico,
+                            nome:servicoSelecionado.nome,
+                            valor:servicoSelecionado.valor,
                             qtd: qtdItem,
                             subTotal: subTotal
                           });
-                          setCadPedido({...cadPedido,listaProdutos:listaProdutoCompras});
+                          setCadConsumoServico({...cadConsumoServico,listaServicos:listaServicoPrestados});
                         }}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -248,12 +245,12 @@ export default function FormCadPedidoCompras(props) {
               </Row>
               <Row className="mt-3">
                 <p>
-                  <strong>Lista de produtos selecionados</strong>
+                  <strong>Lista de servicos selecionados</strong>
                 </p>
-                <TabelaItensPedido 
-                  listaItens={cadPedido.listaProdutos}
-                  setCadPedido={setCadPedido}
-                  dadosPedido={cadPedido}/>
+                <TabelaServicoHospede 
+                  listaItens={cadConsumoServico.listaServicos}
+                  setcadConsumoServico={setCadConsumoServico}
+                  dadosConsumoServico={cadConsumoServico}/>
               </Row>
             </Container>
 
@@ -277,7 +274,7 @@ export default function FormCadPedidoCompras(props) {
           <Button
             className="btn btn-warning border border-warning text-white"
             type="button"
-            onClick={props.chamarTabelaPedidos}
+            onClick={props.chamarTabelaConsumoServicos}
           >
             Voltar
           </Button>

@@ -1,11 +1,11 @@
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
-import { IconeEditar, IconeExcluir } from "../../icones/icones"
+import { IconeEditar, IconeExcluir } from "../../icones/icones";
 
 export default function TabelaDeHospede(props) {
   console.log("props>>>", props.dados);
 
   return (
-    <Container>
+    <Container style={{ maxHeight: '100vh', overflowY: 'auto' }}>
       <Row className="mb-3 border border-success d-flex text-center">
         <h3>Tabela de Hóspedes</h3>
       </Row>
@@ -16,7 +16,7 @@ export default function TabelaDeHospede(props) {
           </Button>
         </Col>
       </Row>
-      <Row className="mt-2 p-2 border border-success">
+      <Row className="mt-2 p-2 border border-success" style={{ overflowX: 'auto' }}>
         <Table striped bordered hover variant="success">
           <thead>
             <tr>
@@ -36,8 +36,8 @@ export default function TabelaDeHospede(props) {
           <tbody>
             {props.dados.map((hospede) => {
               return (
-                <tr key={`${hospede.codigo}`}>
-                  <td>{hospede.codigo}</td>
+                <tr key={`${hospede.cod_hosp}`}>
+                  <td>{hospede.cod_hosp}</td>
                   <td>{hospede.nome}</td>
                   <td>{hospede.cpf}</td>
                   <td>{hospede.endereco}</td>

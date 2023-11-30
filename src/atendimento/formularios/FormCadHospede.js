@@ -32,7 +32,7 @@ export default function FormCadHospede(props) {
       })
       .then((dados) => {
         if (dados.status) {
-          setCadHospede({ ...cadHospede, codigo: dados.codigo });
+          setCadHospede({ ...cadHospede, cod_hosp: dados.cod_hosp });
         }
         alert(dados.mensagem);
         window.location.reload();
@@ -86,12 +86,12 @@ export default function FormCadHospede(props) {
             <Form.Group as={Col} md="1">
               <Form.Label>Código</Form.Label>
               <Form.Control
-                id="codigo"
-                name="codigo"
+                id="cod_hosp"
+                name="cod_hosp"
                 required
                 disabled
                 type="int"
-                value={cadHospede.codigo}
+                value={cadHospede.cod_hosp}
                 onChange={manipularMudanca}
               />
               <Form.Control.Feedback type="invalid">

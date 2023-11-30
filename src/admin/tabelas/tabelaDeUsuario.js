@@ -1,18 +1,19 @@
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
 import { IconeEditar, IconeExcluir } from "../../icones/icones"
 
-export default function TabelaDeAcomodacao(props) {
+
+export default function TabelaDeUsuarios(props) {
   console.log("props>>>", props.dados);
 
   return (
-    <Container style={{ maxHeight: '100vh', overflowY: 'auto' }}>
+    <Container Container style={{ maxHeight: '100vh', overflowY: 'auto' }}>
       <Row className="mb-3 border border-success d-flex text-center">
-        <h3>Tabela de Acomodação</h3>
+        <h3>Tabela de Usuários</h3>
       </Row>
       <Row>
         <Col>
           <Button variant="success" onClick={props.chamarTelaCadastro}>
-            Cadastrar Acomodação
+            Cadastrar Usuário
           </Button>
         </Col>
       </Row>
@@ -21,32 +22,28 @@ export default function TabelaDeAcomodacao(props) {
           <thead>
             <tr>
               <th>Código</th>
-              <th>Número Acomodação</th>
-              <th>Capacidade do Quarto</th>
-              <th>Tamanho</th>
-              <th>Localização</th>
-              <th>Descrição</th>
-              <th>Valor</th>
+              <th>Nome</th>
+              <th>Perfil</th>
+              <th>Data do Cadastro</th>
+              <th>Senha</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            {props.dados.map((acomodacao) => {
+            {props.dados.map((usuario) => {
               return (
-                <tr key={`${acomodacao.codigo}`}>
-                  <td>{acomodacao.codigo}</td>
-                  <td>{acomodacao.num_acom}</td>
-                  <td>{acomodacao.capacidade}</td>
-                  <td>{acomodacao.tamanho}</td>
-                  <td>{acomodacao.localizacao}</td>
-                  <td>{acomodacao.descricao}</td>
-                  <td>{acomodacao.valor}</td>
+                <tr key={`${usuario.codUsuario}`}>
+                  <td>{usuario.codUsuario}</td>
+                  <td>{usuario.nome}</td>
+                  <td>{usuario.perfil}</td>
+                  <td>{usuario.datacadastro}</td>
+                  <td>{usuario.senha}</td>
                   <td>
                     <Button
                       className="btn btn-danger"
                       onClick={() => {
-                        props.excluirAcomodacao(acomodacao);
-                        console.log(acomodacao);
+                        props.excluirUsuario(usuario);
+                        console.log(usuario);
                       }}
                     >
                       <IconeExcluir />
@@ -54,8 +51,8 @@ export default function TabelaDeAcomodacao(props) {
                     <Button
                       className="btn btn-warning"
                       onClick={() => {
-                        props.editarAcomodacao(acomodacao);
-                        console.log(acomodacao);
+                        props.editarUsuario(usuario);
+                        console.log(usuario);
                       }}
                     >
                       <IconeEditar />

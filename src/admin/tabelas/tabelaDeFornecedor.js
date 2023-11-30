@@ -6,7 +6,7 @@ export default function TabelaDeFornecedores(props) {
   console.log("props>>>", props.dados);
 
   return (
-    <Container>
+    <Container Container style={{ maxHeight: '100vh', overflowY: 'auto' }}>
       <Row className="mb-3 border border-success d-flex text-center">
         <h3>Tabela de Fornecedores</h3>
       </Row>
@@ -17,7 +17,7 @@ export default function TabelaDeFornecedores(props) {
           </Button>
         </Col>
       </Row>
-      <Row className="mt-2 p-2 border border-success">
+      <Row className="mt-2 p-2 border border-success" style={{ overflowX: 'auto' }}>
         <Table striped bordered hover variant="success">
           <thead>
             <tr>
@@ -26,15 +26,15 @@ export default function TabelaDeFornecedores(props) {
               <th>Nome Fantasia</th>
               <th>Endereço</th>
               <th>Número</th>
-              {/* <th>Complemento</th> */}
+              <th>Complemento</th>
               <th>Bairro</th>
               <th>Cidade</th>
               <th>UF</th>
-              {/* <th>CEP</th> */}
-              {/* <th>Pessoa</th> */}
+              <th>CEP</th>
+              <th>Pessoa</th>
               <th>CNPJ</th>
-              {/* <th>Estadual</th> */}
-              {/* <th>Municipal</th> */}
+              <th>Estadual</th>
+              <th>Municipal</th>
               <th>Email</th>
               <th>Celular</th>
               <th>Telefone</th>
@@ -51,15 +51,15 @@ export default function TabelaDeFornecedores(props) {
                   <td>{fornecedor.nomeFantasia}</td>
                   <td>{fornecedor.endereco}</td>
                   <td>{fornecedor.numero}</td>
-                  {/* <td>{fornecedor.complemento}</td> */}
+                  <td>{fornecedor.complemento}</td>
                   <td>{fornecedor.bairro}</td>
                   <td>{fornecedor.cidade}</td>
                   <td>{fornecedor.uf}</td>
-                  {/* <td>{fornecedor.cep}</td> */}
-                  {/* <td>{fornecedor.pessoa}</td> */}
+                  <td>{fornecedor.cep}</td>
+                  <td>{fornecedor.pessoa}</td>
                   <td>{fornecedor.cnpj}</td>
-                  {/* <td>{fornecedor.estadual}</td> */}
-                  {/* <td>{fornecedor.municipal}</td> */}
+                  <td>{fornecedor.estadual}</td>
+                  <td>{fornecedor.municipal}</td>
                   <td>{fornecedor.email}</td>
                   <td>{fornecedor.celular}</td>
                   <td>{fornecedor.telefone}</td>

@@ -1,54 +1,36 @@
-import FormCadPedidoCompras from "../formularios/FormCadPedidoCompras";
-import TabelaDePedidoCompra from "../tabelas/tabelaDePedidoCompra";
+import FormCadConsumoServicos from "../formularios/FormCadConsumoServicos";
+import TabelaDeConsumoServico from "../tabelas/tabelaDeConsumoServico";
 import { useState, useEffect } from "react";
-// import Pagina from "../templates/Pagina";
-// import Pagina from "../templates/Pagina";
 import Pagina from "../../templates/Pagina";
 import { Spinner } from "react-bootstrap";
 
 
-export default function TelaDeCadastroPedidoCompra(props) {
+export default function TelaDeCadastroConsumoServico(props) {
   console.log("teste tela 2x")
-  const localRecursos = "http://localhost:4000/pedidocompras";
+  const localRecursos = "http://localhost:4000/consumoservico";
   const [exibirTabela, setExibirTabela] = useState(true);
-  const [listaPedidoCompras, setListaPedidoCompras] = useState([]);
+  const [listaConsumoServicos, setListaConsumoServicos] = useState([]);
   const [erro, setErro] = useState(null);
   const [processado, setProcessado] = useState(false);
 
-  // function apagarPedidoCompra(pedidoCompra){
-  //   fetch(localRecursos,{
-  //     method:"DELETE",
-  //     headers: {'Content-Type':'application/json'},
-  //     body: JSON.stringify(pedidoCompra)
-  //   }).then((resposta) => {
-  //     return resposta.json()
-  //   }).then((retorno) =>{
-  //     if (retorno.resultado){
-  //       // buscarPedidoCompras();
-  //     }
-  //     else {
-  //       alert("Não foi possivel excluir o produto");
-  //     }
-  //   });
-  // }
-
+ 
   function alternarTelas() {
     setExibirTabela(!exibirTabela);
   }
   // const [status, setStatus] = useState(STATUS.ocioso);
 
-  function apagarPedidoCompra(pedidoCompra) {
+  function apagarConsumoServico(consumoServico) {
 
-    fetch("http://localhost:4000/pedidocompras", {
+    fetch("http://localhost:4000/consumoservico", {
       method: "DELETE",
       headers: { "content-Type": "application/json" },
       body: JSON.stringify({
-        codPedido: pedidoCompra.codPedido
+        codConsumoServico: consumoServico.codConsumoServico
       }),
     }).then(
       (dados) => {   
         console.log("dados", dados)      
-        buscarPedidoCompras();
+        buscarConsumoServicos();
       },
       (error) => {
        
@@ -56,7 +38,7 @@ export default function TelaDeCadastroPedidoCompra(props) {
     );
   }
 
-  function buscarPedidoCompras() {
+  function buscarConsumoServicos() {
     console.log("buscar")
     fetch(localRecursos, { method: "GET" })
       .then((resposta) => {       
@@ -67,11 +49,11 @@ export default function TelaDeCadastroPedidoCompra(props) {
       .then(
         (dados) => {         
           setProcessado(true);
-          setListaPedidoCompras(() => [
-            // ...prevListaPedidoCompras,
+          setListaConsumoServicos(() => [
             ...dados,
+
           ]);
-          // setStatus(STATUS.sucesso);
+          
         },
         (error) => {
           setProcessado(true);
@@ -85,14 +67,14 @@ export default function TelaDeCadastroPedidoCompra(props) {
 
   useEffect(() => {
     console.log("useeffect")
-    buscarPedidoCompras();
+    buscarConsumoServicos();
   }, []);
-  // console.log(listaPedidoCompras)
+  // console.log(listaConsumoServicos)
 
   if (erro) {
     return (
       <div>
-        <p>Erro ao obter os produtos do Backend : {erro.message}</p>
+        <p>Erro ao obter os servicos do Backend : {erro.message}</p>
       </div>
     );
   } else if (!processado) {
@@ -107,17 +89,17 @@ export default function TelaDeCadastroPedidoCompra(props) {
     if (exibirTabela) {
       return (
         <Pagina>
-          <TabelaDePedidoCompra
-            dados={listaPedidoCompras}
+          <TabelaDeConsumoServico
+            dados={listaConsumoServicos}
             chamarTelaCadastro={alternarTelas}
-            excluirPedidoCompra={apagarPedidoCompra}
+            excluirConsumoServico={apagarConsumoServico}
           />
         </Pagina>
       );
     } else {
       return (
         <Pagina>
-          <FormCadPedidoCompras chamarTabelaPedidos={alternarTelas} />
+          <FormCadConsumoServicos chamarTabelaConsumoServicos={alternarTelas} />
         </Pagina>
       );
     }

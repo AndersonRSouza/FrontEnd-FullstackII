@@ -1,21 +1,20 @@
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
-import { IconeExcluir } from "../../icones/icones"
-
+import { IconeExcluir } from "../../icones/icones";
 // import TelaDeCadastroPedidoCompra from "../TelasDeCadastro/TelaDeCadastroPedidoCompras";
 // import  from "../TelasDeCadastro/TelaDeCadastroPedidoCompras";
 
-export default function TabelaDePedidoCompra(props) {
+export default function TabelaDeConsumoProduto(props) {
   console.log("props>>>", props.dados);
 
   return (
-    <Container Container style={{ maxHeight: '100vh', overflowY: 'auto' }}>
+    <Container style={{ maxHeight: '100vh', overflowY: 'auto' }}>
       <Row className="mb-3 border border-success d-flex text-center">
-        <h3>Tabela de Pedido Compras</h3>
+        <h3>Tabela de Consumo de Produto</h3>
       </Row>
       <Row>
         <Col>
           <Button variant="success" onClick={props.chamarTelaCadastro}>
-            Cadastrar Pedido Compra
+            Cadastrar Compra de Produto dos Hóspedes
           </Button>
         </Col>
       </Row>
@@ -24,27 +23,29 @@ export default function TabelaDePedidoCompra(props) {
           <thead>
             <tr>
               <th>Código</th>
-              <th>Cód Fornecedor</th>
-              <th>Fornecedor</th>
+              <th>Cód Hospode</th>
+              <th>Hospede</th>
               <th>Data da Compra</th>
+              <th>Preço</th>
               <th>Total Compra</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-            {props.dados.map((pedidoCompra) => {
+            {props.dados.map((consumoProduto) => {
               return (
-                <tr key={`${pedidoCompra.codPedido} `}>
-                  <td>{pedidoCompra.codPedido}</td>
-                  <td>{pedidoCompra.fornecedor.codigo}</td>
-                  <td>{pedidoCompra.fornecedor.razaoSocial}</td>
-                  <td>{pedidoCompra.dataCompra}</td>
-                  <td>{pedidoCompra.total}</td>
+                <tr key={`${consumoProduto.codConsumoProduto} `}>
+                  <td>{consumoProduto.codConsumoProduto}</td>
+                  <td>{consumoProduto.hospede.cod_hosp}</td>
+                  <td>{consumoProduto.hospede.nome}</td>
+                  <td>{consumoProduto.dataCompra}</td>
+                  <td>{consumoProduto.preco}</td>
+                  <td>{consumoProduto.total}</td>
                   <td>
                     <Button
                       className="btn btn-danger"
                       onClick={() => {
-                        props.excluirPedidoCompra(pedidoCompra);
+                        props.excluirConsumoProduto(consumoProduto);
                       }}
                       // onClick={()=>excluirPedidoCompra(pedidoCompra)}
                     >

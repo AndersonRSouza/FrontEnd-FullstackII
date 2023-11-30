@@ -1,54 +1,36 @@
-import FormCadPedidoCompras from "../formularios/FormCadPedidoCompras";
-import TabelaDePedidoCompra from "../tabelas/tabelaDePedidoCompra";
+import FormCadConsumoProdutos from "../../atendimento/formularios/FormCadConsumoProdutos";
+import TabelaDeConsumoProduto from "../tabelas/tabelaDeConsumoProduto";
 import { useState, useEffect } from "react";
-// import Pagina from "../templates/Pagina";
-// import Pagina from "../templates/Pagina";
 import Pagina from "../../templates/Pagina";
 import { Spinner } from "react-bootstrap";
 
 
-export default function TelaDeCadastroPedidoCompra(props) {
+export default function TelaDeCadastroConsumoProduto(props) {
   console.log("teste tela 2x")
-  const localRecursos = "http://localhost:4000/pedidocompras";
+  const localRecursos = "http://localhost:4000/consumoproduto";
   const [exibirTabela, setExibirTabela] = useState(true);
-  const [listaPedidoCompras, setListaPedidoCompras] = useState([]);
+  const [listaConsumoProdutos, setListaConsumoProdutos] = useState([]);
   const [erro, setErro] = useState(null);
   const [processado, setProcessado] = useState(false);
 
-  // function apagarPedidoCompra(pedidoCompra){
-  //   fetch(localRecursos,{
-  //     method:"DELETE",
-  //     headers: {'Content-Type':'application/json'},
-  //     body: JSON.stringify(pedidoCompra)
-  //   }).then((resposta) => {
-  //     return resposta.json()
-  //   }).then((retorno) =>{
-  //     if (retorno.resultado){
-  //       // buscarPedidoCompras();
-  //     }
-  //     else {
-  //       alert("Não foi possivel excluir o produto");
-  //     }
-  //   });
-  // }
-
+ 
   function alternarTelas() {
     setExibirTabela(!exibirTabela);
   }
   // const [status, setStatus] = useState(STATUS.ocioso);
 
-  function apagarPedidoCompra(pedidoCompra) {
+  function apagarConsumoProduto(consumoProduto) {
 
-    fetch("http://localhost:4000/pedidocompras", {
+    fetch("http://localhost:4000/consumoproduto", {
       method: "DELETE",
       headers: { "content-Type": "application/json" },
       body: JSON.stringify({
-        codPedido: pedidoCompra.codPedido
+        codConsumoProduto: consumoProduto.codConsumoProduto
       }),
     }).then(
       (dados) => {   
         console.log("dados", dados)      
-        buscarPedidoCompras();
+        buscarConsumoProdutos();
       },
       (error) => {
        
@@ -56,7 +38,7 @@ export default function TelaDeCadastroPedidoCompra(props) {
     );
   }
 
-  function buscarPedidoCompras() {
+  function buscarConsumoProdutos() {
     console.log("buscar")
     fetch(localRecursos, { method: "GET" })
       .then((resposta) => {       
@@ -67,11 +49,11 @@ export default function TelaDeCadastroPedidoCompra(props) {
       .then(
         (dados) => {         
           setProcessado(true);
-          setListaPedidoCompras(() => [
-            // ...prevListaPedidoCompras,
+          setListaConsumoProdutos(() => [
             ...dados,
+
           ]);
-          // setStatus(STATUS.sucesso);
+          
         },
         (error) => {
           setProcessado(true);
@@ -85,9 +67,9 @@ export default function TelaDeCadastroPedidoCompra(props) {
 
   useEffect(() => {
     console.log("useeffect")
-    buscarPedidoCompras();
+    buscarConsumoProdutos();
   }, []);
-  // console.log(listaPedidoCompras)
+  // console.log(listaConsumoProdutos)
 
   if (erro) {
     return (
@@ -107,17 +89,17 @@ export default function TelaDeCadastroPedidoCompra(props) {
     if (exibirTabela) {
       return (
         <Pagina>
-          <TabelaDePedidoCompra
-            dados={listaPedidoCompras}
+          <TabelaDeConsumoProduto
+            dados={listaConsumoProdutos}
             chamarTelaCadastro={alternarTelas}
-            excluirPedidoCompra={apagarPedidoCompra}
+            excluirConsumoProduto={apagarConsumoProduto}
           />
         </Pagina>
       );
     } else {
       return (
         <Pagina>
-          <FormCadPedidoCompras chamarTabelaPedidos={alternarTelas} />
+          <FormCadConsumoProdutos chamarTabelaConsumoProdutos={alternarTelas} />
         </Pagina>
       );
     }

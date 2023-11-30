@@ -1,29 +1,26 @@
 import { useState, useEffect } from "react";
-import FormCadHospede from "../formularios/FormCadHospede";
-import TabelaDeHospede from "../tabelas/tabelaDeHospede";
+import FormCadUsuarios from "../formularios/FormCadUsuarios";
+// import FormCadUsuario from "../formularios/FormCadUsuario";
+import TabelaDeUsuarios from "../tabelas/tabelaDeUsuario";
+// import TabelaDeUsuarioes from "../tabelas/tabelaDeUsuario";
 import Pagina from "../../templates/Pagina";
 import { Spinner } from "react-bootstrap";
 
-export default function TelaDeCadastroHospede(props) {
+export default function TelaDeCadastroUsuario(props) {
   console.log("teste tela 2x");
-  const localRecursos = "http://localhost:4000/hospede";
+  const localRecursos = "http://localhost:4000/usuarios";
   const [exibirTabela, setExibirTabela] = useState(true);
-  const [listaHospedes, setListaHospedes] = useState([]);
+  const [listaUsuarios, setListaUsuarios] = useState([]);
   const [erro, setErro] = useState(null);
   const [processado, setProcessado] = useState(false);
   const [atualizando, setAtualizando] = useState(false);
-  const [hospedeEmEdicao, setHospedeEmEdicao] = useState(
+  const [usuarioEmEdicao, setUsuarioEmEdicao] = useState(
     {
-      cod_hosp: 0,
+      codUsuario: 0,
       nome: "",
-      cpf: "",
-      endereco: "",
-      rg: "",
-      telefone: "",
-      email: "",
-      datanasc: "",
-      sexo: "",
-      cep: ""
+      perfil: "",
+      datacadastro: "",
+      senha: "" 
     }
   );
 
@@ -32,23 +29,23 @@ export default function TelaDeCadastroHospede(props) {
   }
 
   
-  // function apagarFornecedor(fornecedor) {
-    //   fetch("http://localhost:4000/fornecedor", {
+  // function apagarUsuario(usuario) {
+    //   fetch("http://localhost:4000/usuario", {
       //     method: "DELETE",
       //     headers: { "content-Type": "application/json" },
       //     body: JSON.stringify({
-        //       codigo: fornecedor.codigo,
+        //       codigo: usuario.codigo,
   //     }),
   //   }).then(
     //     (dados) => {
       //       console.log("dados", dados);
-      //       buscarFornecedores();
+      //       buscarUsuarioes();
       //     },
       //     (error) => {}
       //   );
       // }
       
-      function buscarHospedes() {
+      function buscarUsuarios() {
         fetch(localRecursos, { method: "GET" })
         .then((resposta) => {
           if (resposta.ok) {
@@ -59,7 +56,7 @@ export default function TelaDeCadastroHospede(props) {
           (dados) => {
             console.log("Dados recebidos:", dados);
             setProcessado(true);
-            setListaHospedes(dados);
+            setListaUsuarios(dados);
           },
           (error) => {
             setProcessado(true);
@@ -67,26 +64,26 @@ export default function TelaDeCadastroHospede(props) {
           }
           );
         }
-        function prepararHospedeParaEdicao(hospede){
+        function prepararUsuarioParaEdicao(usuario){
           setAtualizando(true);
-          setHospedeEmEdicao(hospede);
+          setUsuarioEmEdicao(usuario);
           setExibirTabela(false);
         }
 
-        function apagarHospede(hospede) {
-          fetch("http://localhost:4000/hospede", {
+        function apagarUsuario(usuario) {
+          fetch("http://localhost:4000/usuarios", {
             method: "DELETE",
             headers: { "content-Type": "application/json" },
             body: JSON.stringify({
-              cod_hosp: hospede.cod_hosp,
+              codUsuario: usuario.codUsuario,
             }),
           })
             .then((resposta) => {
               if (resposta.ok) {
-                alert("Hospede excluído com sucesso");
-                buscarHospedes();
+                alert("Usuário excluído com sucesso");
+                buscarUsuarios();
               } else {
-                console.error("Erro ao excluir hóspede");
+                console.error("Erro ao excluir usuário");
               }
             })
             .catch((error) => {
@@ -95,37 +92,37 @@ export default function TelaDeCadastroHospede(props) {
         }
 
   useEffect(() => {
-    buscarHospedes();
+    buscarUsuarios();
   }, []);
 
   if (erro) {
     return (
       <div>
-        <p>Erro ao obter os hóspedes do Backend: {erro.message}</p>
+        <p>Erro ao obter os usuarios do Backend: {erro.message}</p>
       </div>
     );
   } else if (!processado) {
     return (
       <Spinner animation="border" role="status">
-        <span className="visually-hidden">Carregando Hóspedes...</span>
+        <span className="visually-hidden">Carregando Usuarios...</span>
       </Spinner>
     );
   } else {
     if (exibirTabela) {
       return (
         <Pagina>
-          <TabelaDeHospede
-            dados={listaHospedes}
+          <TabelaDeUsuarios
+            dados={listaUsuarios}
             chamarTelaCadastro={alternarTelas}
-            excluirHospede={apagarHospede}
-            editarHospede={prepararHospedeParaEdicao}
+            excluirUsuario={apagarUsuario}
+            editarUsuario={prepararUsuarioParaEdicao}
           />
         </Pagina>
       );
     } else {
       return (
         <Pagina>
-          <FormCadHospede chamarTabelaHospedes={alternarTelas} modoEdicao={atualizando} hospede={hospedeEmEdicao}/>
+          <FormCadUsuarios chamarTabelaUsuario={alternarTelas} modoEdicao={atualizando} usuario={usuarioEmEdicao}/>
         </Pagina>
       );
     }

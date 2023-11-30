@@ -1,50 +1,58 @@
-import React, { useState } from 'react';
-import { Container } from 'react-bootstrap';
-import TelaMenu from './TelasDeCadastro/TelaMenu';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import TelaDeCadastroFornecedor from './admin/telasDeCadastro/TelaDeCadastroFornecedor';
-import TelaDeCadastroHospede from './atendimento/telasDeCadastro/TelaDeCadastroHospede';
-import TelaDeCadastroAcomodacao from './atendimento/telasDeCadastro/TelaDeCadastroAcomodacao';
-import TelaDeCadastroPedidoCompra from './admin/telasDeCadastro/TelaDeCadastroPedidoCompras';
-import TelaDeCadastroProduto from './admin/telasDeCadastro/TelaDeCadastroProdutos';
-import TelaDeCadastroServico from './atendimento/telasDeCadastro/TelaDeCadastroServico';
-import AuthComponent from './componentes/auth/AuthComponent';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import TelaMenu from "./TelasDeCadastro/TelaMenu";
+import TelaDeCadastroFornecedor from "./admin/telasDeCadastro/TelaDeCadastroFornecedor";
+import TelaDeCadastroHospede from "./atendimento/telasDeCadastro/TelaDeCadastroHospede";
+import TelaDeCadastroAcomodacao from "./atendimento/telasDeCadastro/TelaDeCadastroAcomodacao";
+import TelaDeCadastroPedidoCompra from "./admin/telasDeCadastro/TelaDeCadastroPedidoCompras";
+import TelaDeCadastroProduto from "./admin/telasDeCadastro/TelaDeCadastroProdutos";
+import TelaDeCadastroServico from "./atendimento/telasDeCadastro/TelaDeCadastroServico";
+import TelaDeCadastroUsuario from "./admin/telasDeCadastro/TelaDeCadastroUsuario";
+import Login from "./login/login";
+import { AuthProvider, useAuth } from "./componentes/auth/auth";
+import { Logout } from "./logout/logout";
+// import { RequireAuth } from "./componentes/privateRoute/RequireAuth";
+import { PrivateRoute } from "./componentes/privateRoute/PrivateRoute";
+import TelaDeCadastroConsumoProduto from "./atendimento/telasDeCadastro/TelaDeCadastroConsumoProduto";
+import TelaDeCadastroConsumoServico from "./atendimento/telasDeCadastro/TelaDeCadastroConsumoServico";
 
-function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+export default function App() {
+  const auth = useAuth();
   return (
-    <Container>
-      <BrowserRouter>
-        <Routes>
-          {/* Rota para o componente de autenticação */}
-          <Route
-            path="/auth/*"
-            element={<AuthComponent isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
-          />
-
-          {/* Rotas protegidas */}
-          {isAuthenticated ? (
-            <>
-              <Route path="/cadastroPedidoCompra" element={<TelaDeCadastroPedidoCompra />} />
-              <Route path="/cadastroHospede" element={<TelaDeCadastroHospede />} />
-              <Route path="/cadastroAcomodacao" element={<TelaDeCadastroAcomodacao />} />
-              <Route path="/cadastroFornecedor" element={<TelaDeCadastroFornecedor />} />
-              <Route path="/cadastroProduto" element={<TelaDeCadastroProduto />} />
-              <Route path="/cadastroServico" element={<TelaDeCadastroServico />} />
-              <Route path="/" element={<TelaMenu />} />
-            </>
-          ) : (
-            // Redirecionar para a página de autenticação se não estiver autenticado
-            <Route
-              path="/*"
-              element={<Navigate to="/" />}
-            />
-          )}
-        </Routes>
-      </BrowserRouter>
-    </Container>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<TelaMenu />} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route
+          path="/logout"
+          element={
+            <RequireAuth>
+              <Logout />
+            </RequireAuth>
+          }
+        /> */}
+        <Route
+          path="/cadastroPedidoCompra"
+          element={<TelaDeCadastroPedidoCompra />}
+        />
+        <Route
+          path="/cadastroUsuario"
+          element={<PrivateRoute element={<TelaDeCadastroUsuario />} allowedProfiles={['administrador']}/>}
+        />
+        <Route path="/cadastroHospede" element={<TelaDeCadastroHospede />} />
+        <Route
+          path="/cadastroAcomodacao"
+          element={<TelaDeCadastroAcomodacao />}
+        />
+        <Route
+          path="/cadastroFornecedor"
+          element={<TelaDeCadastroFornecedor />}
+        />
+        <Route path="/cadastroProduto" element={<TelaDeCadastroProduto />} />
+        <Route path="/cadastroServico" element={<TelaDeCadastroServico />} />
+        <Route path="/consumoProduto" element={<TelaDeCadastroConsumoProduto/>}/>
+        <Route path="/consumoServico" element={<TelaDeCadastroConsumoServico/>}/>
+      </Routes>
+    </AuthProvider>
   );
 }
-
-export default App;
