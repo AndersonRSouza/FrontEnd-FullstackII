@@ -9,49 +9,79 @@ import TelaDeCadastroProduto from "./admin/telasDeCadastro/TelaDeCadastroProduto
 import TelaDeCadastroServico from "./atendimento/telasDeCadastro/TelaDeCadastroServico";
 import TelaDeCadastroUsuario from "./admin/telasDeCadastro/TelaDeCadastroUsuario";
 import Login from "./login/login";
-import { AuthProvider, useAuth } from "./componentes/auth/auth";
-import { Logout } from "./logout/logout";
+import Logout from "./logout/logout";
+import { AuthProvider } from "./componentes/auth/auth";
 // import { RequireAuth } from "./componentes/privateRoute/RequireAuth";
-import { PrivateRoute } from "./componentes/privateRoute/PrivateRoute";
 import TelaDeCadastroConsumoProduto from "./atendimento/telasDeCadastro/TelaDeCadastroConsumoProduto";
 import TelaDeCadastroConsumoServico from "./atendimento/telasDeCadastro/TelaDeCadastroConsumoServico";
 
-export default function App() {
-  const auth = useAuth();
+export default function App() {  
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<TelaMenu />} />
+        <Route
+          path="/"
+          element={<TelaMenu />}
+        />
         <Route path="/login" element={<Login />} />
-        {/* <Route
-          path="/logout"
-          element={
-            <RequireAuth>
-              <Logout />
-            </RequireAuth>
-          }
-        /> */}
+        <Route path="/logout" element={<Logout />} />
         <Route
           path="/cadastroPedidoCompra"
-          element={<TelaDeCadastroPedidoCompra />}
+          element={
+          <TelaDeCadastroPedidoCompra />
+        }
         />
         <Route
           path="/cadastroUsuario"
-          element={<PrivateRoute element={<TelaDeCadastroUsuario />} allowedProfiles={['administrador']}/>}
+          element={
+            <TelaDeCadastroUsuario />
+          }
         />
-        <Route path="/cadastroHospede" element={<TelaDeCadastroHospede />} />
+        <Route
+          path="/cadastroHospede"
+          element={
+            <TelaDeCadastroHospede />
+          }
+        />
         <Route
           path="/cadastroAcomodacao"
-          element={<TelaDeCadastroAcomodacao />}
+          element={
+            <TelaDeCadastroAcomodacao />
+          }
         />
         <Route
           path="/cadastroFornecedor"
-          element={<TelaDeCadastroFornecedor />}
+          element={
+            <TelaDeCadastroFornecedor />
+          }
         />
-        <Route path="/cadastroProduto" element={<TelaDeCadastroProduto />} />
-        <Route path="/cadastroServico" element={<TelaDeCadastroServico />} />
-        <Route path="/consumoProduto" element={<TelaDeCadastroConsumoProduto/>}/>
-        <Route path="/consumoServico" element={<TelaDeCadastroConsumoServico/>}/>
+        <Route
+          path="/cadastroProduto"
+          element={
+            <TelaDeCadastroProduto />
+          }
+        />
+        <Route
+          path="/cadastroServico"
+          element={
+            <TelaDeCadastroServico />
+          }
+        />
+        <Route
+          path="/consumoProduto"
+          element={
+            
+              <TelaDeCadastroConsumoProduto />
+          }
+        />
+        <Route
+          path="/consumoServico"
+          element={
+            
+              <TelaDeCadastroConsumoServico />
+            
+          }
+        />
       </Routes>
     </AuthProvider>
   );

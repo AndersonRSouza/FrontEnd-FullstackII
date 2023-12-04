@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import FormCadFornecedor from "../formularios/FormCadFornecedor";
 import TabelaDeFornecedores from "../tabelas/tabelaDeFornecedor";
 import Pagina from "../../templates/Pagina";
-import { Spinner } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
+import { useAuth } from "../../componentes/auth/auth";
+import { useNavigate } from "react-router-dom";
+import { IconeCadeado } from "../../icones/icones";
 
 export default function TelaDeCadastroFornecedor(props) {
   console.log("teste tela 2x");
@@ -12,6 +15,10 @@ export default function TelaDeCadastroFornecedor(props) {
   const [erro, setErro] = useState(null);
   const [processado, setProcessado] = useState(false);
   const [atualizando, setAtualizando] = useState(false);
+  const { user } = useAuth();
+  //const navigate = useNavigate();
+  const navigate = useNavigate();
+  let permiteAcessar = user.perfil === "Administrador";
   const [fornecedorEmEdicao, setFornecedorEmEdicao] = useState(
     {
       codigo: 0,
@@ -105,6 +112,23 @@ export default function TelaDeCadastroFornecedor(props) {
   useEffect(() => {
     buscarFornecedores();
   }, []);
+
+  if (!permiteAcessar) {
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <Card
+          className="p-4 text-center"
+          style={{ backgroundColor: "lightgray" }}
+        >
+          <IconeCadeado/>
+          <h3>Você não tem permissão para visualizar essa tela.</h3>
+        </Card>
+      </div>
+    );
+  }
 
   if (erro) {
     return (

@@ -4,11 +4,18 @@ import { useState, useEffect } from "react";
 // import Pagina from "../templates/Pagina";
 // import Pagina from "../templates/Pagina";
 import Pagina from "../../templates/Pagina";
-import { Spinner } from "react-bootstrap";
-
+import { Card, Spinner } from "react-bootstrap";
+import { useAuth } from "../../componentes/auth/auth";
+import { useNavigate } from "react-router-dom";
+import { IconeCadeado } from "../../icones/icones";
 
 export default function TelaDeCadastroPedidoCompra(props) {
-  console.log("teste tela 2x")
+  const { user } = useAuth();
+  //const navigate = useNavigate();
+  const navigate = useNavigate();
+  let permiteAcessar = user.perfil === "Administrador";
+
+  console.log("teste tela 2x");
   const localRecursos = "http://localhost:4000/pedidocompras";
   const [exibirTabela, setExibirTabela] = useState(true);
   const [listaPedidoCompras, setListaPedidoCompras] = useState([]);
@@ -38,34 +45,31 @@ export default function TelaDeCadastroPedidoCompra(props) {
   // const [status, setStatus] = useState(STATUS.ocioso);
 
   function apagarPedidoCompra(pedidoCompra) {
-
     fetch("http://localhost:4000/pedidocompras", {
       method: "DELETE",
       headers: { "content-Type": "application/json" },
       body: JSON.stringify({
-        codPedido: pedidoCompra.codPedido
+        codPedido: pedidoCompra.codPedido,
       }),
     }).then(
-      (dados) => {   
-        console.log("dados", dados)      
+      (dados) => {
+        console.log("dados", dados);
         buscarPedidoCompras();
       },
-      (error) => {
-       
-      }
+      (error) => {}
     );
   }
 
   function buscarPedidoCompras() {
-    console.log("buscar")
+    console.log("buscar");
     fetch(localRecursos, { method: "GET" })
-      .then((resposta) => {       
+      .then((resposta) => {
         if (resposta.ok) {
           return resposta.json();
         }
       })
       .then(
-        (dados) => {         
+        (dados) => {
           setProcessado(true);
           setListaPedidoCompras(() => [
             // ...prevListaPedidoCompras,
@@ -84,10 +88,27 @@ export default function TelaDeCadastroPedidoCompra(props) {
   }
 
   useEffect(() => {
-    console.log("useeffect")
+    console.log("useeffect");
     buscarPedidoCompras();
   }, []);
   // console.log(listaPedidoCompras)
+
+  if (!permiteAcessar) {
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <Card
+          className="p-4 text-center"
+          style={{ backgroundColor: "lightgray" }}
+        >
+          <IconeCadeado/>
+          <h3>Você não tem permissão para visualizar essa tela.</h3>
+        </Card>
+      </div>
+    );
+  }
 
   if (erro) {
     return (
