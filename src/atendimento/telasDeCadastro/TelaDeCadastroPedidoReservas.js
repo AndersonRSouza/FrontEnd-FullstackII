@@ -1,24 +1,19 @@
-import FormCadPedidoCompras from "../formularios/FormCadPedidoCompras";
-import TabelaDePedidoCompra from "../tabelas/tabelaDePedidoCompra";
+// import FormCadFornecedor from "../formularios/FormCadFornecedor"
+// import FormCadPedidoCompras from "../formularios/FormCadPedidoCompras";
+import FormCadPedidoReservas from "../formularios/FormCadPedidoReservas";
+import TabelaDePedidoReserva from "../tabelas/tabelaDePedidoReserva";
 import { useState, useEffect } from "react";
 // import Pagina from "../templates/Pagina";
 // import Pagina from "../templates/Pagina";
 import Pagina from "../../templates/Pagina";
-import { Card, Spinner } from "react-bootstrap";
-import { useAuth } from "../../componentes/auth/auth";
-import { useNavigate } from "react-router-dom";
-import { IconeCadeado } from "../../icones/icones";
+import { Spinner } from "react-bootstrap";
 
-export default function TelaDeCadastroPedidoCompra(props) {
-  const { user } = useAuth();
-  //const navigate = useNavigate();
-  const navigate = useNavigate();
-  let permiteAcessar = user.perfil === "Administrador";
 
-  console.log("teste tela 2x");
-  const localRecursos = "http://localhost:4000/pedidocompras";
+export default function TelaDeCadastroPedidoReserva(props) {
+  console.log("teste tela 2x")
+  const localRecursos = "http://localhost:4000/pedidoreservas";
   const [exibirTabela, setExibirTabela] = useState(true);
-  const [listaPedidoCompras, setListaPedidoCompras] = useState([]);
+  const [listaPedidoReservas, setListaPedidoReservas] = useState([]);
   const [erro, setErro] = useState(null);
   const [processado, setProcessado] = useState(false);
 
@@ -44,34 +39,37 @@ export default function TelaDeCadastroPedidoCompra(props) {
   }
   // const [status, setStatus] = useState(STATUS.ocioso);
 
-  function apagarPedidoCompra(pedidoCompra) {
-    fetch("http://localhost:4000/pedidocompras", {
+  function apagarPedidoReserva(pedidoReserva) {
+
+    fetch("http://localhost:4000/pedidoreservas", {
       method: "DELETE",
       headers: { "content-Type": "application/json" },
       body: JSON.stringify({
-        codPedido: pedidoCompra.codPedido,
+        codPedido: pedidoReserva.codPedido
       }),
     }).then(
-      (dados) => {
-        console.log("dados", dados);
-        buscarPedidoCompras();
+      (dados) => {   
+        console.log("dados", dados)      
+        buscarPedidoReservas();
       },
-      (error) => {}
+      (error) => {
+       
+      }
     );
   }
 
-  function buscarPedidoCompras() {
-    console.log("buscar");
+  function buscarPedidoReservas() {
+    console.log("buscar")
     fetch(localRecursos, { method: "GET" })
-      .then((resposta) => {
+      .then((resposta) => {       
         if (resposta.ok) {
           return resposta.json();
         }
       })
       .then(
-        (dados) => {
+        (dados) => {         
           setProcessado(true);
-          setListaPedidoCompras(() => [
+          setListaPedidoReservas(() => [
             // ...prevListaPedidoCompras,
             ...dados,
           ]);
@@ -88,39 +86,22 @@ export default function TelaDeCadastroPedidoCompra(props) {
   }
 
   useEffect(() => {
-    console.log("useeffect");
-    buscarPedidoCompras();
+    console.log("useeffect")
+    buscarPedidoReservas();
   }, []);
   // console.log(listaPedidoCompras)
-
-  if (!permiteAcessar) {
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
-    return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <Card
-          className="p-4 text-center"
-          style={{ backgroundColor: "lightgray" }}
-        >
-          <IconeCadeado/>
-          <h3>Você não tem permissão para visualizar essa tela.</h3>
-        </Card>
-      </div>
-    );
-  }
 
   if (erro) {
     return (
       <div>
-        <p>Erro ao obter os produtos do Backend : {erro.message}</p>
+        <p>Erro ao obter as acomodações do Backend : {erro.message}</p>
       </div>
     );
   } else if (!processado) {
     return (
       <Spinner animation="border" role="status">
         <span className="visually-hidden">
-          Carregando Pedidos de Compras...
+          Carregando Pedidos de Reservas...
         </span>
       </Spinner>
     );
@@ -128,17 +109,17 @@ export default function TelaDeCadastroPedidoCompra(props) {
     if (exibirTabela) {
       return (
         <Pagina>
-          <TabelaDePedidoCompra
-            dados={listaPedidoCompras}
+          <TabelaDePedidoReserva
+            dados={listaPedidoReservas}
             chamarTelaCadastro={alternarTelas}
-            excluirPedidoCompra={apagarPedidoCompra}
+            excluirPedidoReserva={apagarPedidoReserva}
           />
         </Pagina>
       );
     } else {
       return (
         <Pagina>
-          <FormCadPedidoCompras chamarTabelaPedidos={alternarTelas} />
+          <FormCadPedidoReservas chamarTabelaPedidos={alternarTelas} />
         </Pagina>
       );
     }

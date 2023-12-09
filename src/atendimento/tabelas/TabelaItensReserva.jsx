@@ -1,15 +1,15 @@
 // import { useState } from "react";
 import { Table, Button, Container } from "react-bootstrap";
 
-export default function TabelaServicoHospede(props) {
-    var totalPedido =0;
+export default function TabelaItensReserva(props) {
+    var totalReserva =0;
     return (
         <Container className="mb-3 border">
             <Table striped bordered hover variant="success">
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Descrição do Servico</th>
+                        <th>Descrição da Acomodação</th>
                         <th>Preço</th>
                         <th>Qtd</th>
                         <th>SubTotal</th>
@@ -19,18 +19,18 @@ export default function TabelaServicoHospede(props) {
                 <tbody>
                     {
                         props.listaItens?.map((item, indice) => {
-                            totalPedido += parseFloat(item.subTotal);
+                            totalReserva += parseFloat(item.subTotal);
                             return <tr key={indice}>
-                                <td>{item.codServico}</td>
-                                <td>{item.nome}</td>
-                                <td>{item.preco}</td>
+                                <td>{item.codigo}</td>
+                                <td>{item.descricao}</td>
+                                <td>{item.valor}</td>
                                 <td>{item.qtd}</td>
                                 <td>{item.subTotal}</td>
                                 <td>
                                     <Button onClick={() => {
                                         // remover o item da lista
-                                        const lista = props.listaItens.filter((prod)=> prod.codServico !== item.codServico);
-                                        props.setCadConsumoServico({...props.dadosConsumoServico, listaServicos:lista});
+                                        const lista = props.listaItens.filter((prod)=> prod.codigo !== item.codigo);
+                                        props.setCadReserva({...props.dadosReserva, listaAcomodacoes:lista});
                                     }}>
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                             width="20"
@@ -48,7 +48,7 @@ export default function TabelaServicoHospede(props) {
                     }
                 </tbody>
             </Table>
-            <p>Total de Servicos: {totalPedido}</p>
+            <p>Total da Venda: {totalReserva}</p>
         </Container>
     )
 }

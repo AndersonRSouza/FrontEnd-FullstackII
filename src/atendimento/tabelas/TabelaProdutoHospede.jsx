@@ -13,6 +13,7 @@ export default function TabelaProdutoHospede(props) {
                         <th>Preço</th>
                         <th>Qtd</th>
                         <th>SubTotal</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
